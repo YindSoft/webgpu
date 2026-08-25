@@ -224,6 +224,18 @@ This project uses FFI bindings to wgpu-native. If you're looking for a **100% Pu
 - [wgpu-native](https://github.com/gfx-rs/wgpu-native) — Rust WebGPU implementation (runtime binary, not a Go dependency)
 - [golang.org/x/sys](https://pkg.go.dev/golang.org/x/sys) — Platform-specific syscalls
 
+
+
+## Star History
+
+<a href="https://starhistory.io">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.starhistory.io/png?repos=go-webgpu/webgpu&style=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.starhistory.io/png?repos=go-webgpu/webgpu&style=professional" />
+   <img alt="Star History Chart" src="https://api.starhistory.io/png?repos=go-webgpu/webgpu" width="800" />
+ </picture>
+</a>
+
 ## License
 
 MIT
