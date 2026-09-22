@@ -531,5 +531,8 @@ func stringViewToString(sv StringView) string {
 	if sv.Length > 1<<20 { // 1MB max
 		return ""
 	}
-	return unsafe.String((*byte)(ptrFromUintptr(sv.Data)), int(sv.Length))
+	// Copy the bytes: the StringView memory belongs to wgpu-native and is
+	// freed or reused after the call. Aliasing it with unsafe.String returned
+	// garbage adapter names when the string was read later.
+	return string(unsafe.Slice((*byte)(ptrFromUintptr(sv.Data)), int(sv.Length)))
 }
