@@ -489,7 +489,7 @@ func (q *Queue) GetTimestampPeriod() float32 {
 		return 0
 	}
 
-	proc, ok := procQueueGetTimestampPeriod.(float32Proc)
+	proc, ok := procQueueGetTimestampPeriod.impl.(float32Proc)
 	if !ok {
 		return 0
 	}
