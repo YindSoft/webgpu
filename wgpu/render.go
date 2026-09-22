@@ -67,6 +67,8 @@ type RenderPassDepthStencilAttachment struct {
 // renderPassDepthStencilAttachment is the native structure (40 bytes).
 // Uses uint32 for LoadOp/StoreOp with wgpu-native converted values.
 type renderPassDepthStencilAttachment struct {
+	// nextInChain comes first in wgpu-native v29's webgpu.h.
+	nextInChain       uintptr
 	view              uintptr
 	depthLoadOp       uint32 // wgpu-native converted value
 	depthStoreOp      uint32 // wgpu-native converted value
