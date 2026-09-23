@@ -31,6 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   wgpu-native wrote its output to stale memory (seen as
   `wgpuSurfaceGetCurrentTexture` returning a zeroed `WGPUSurfaceTexture` about
   once every few program starts).
+- Nested descriptors are pinned on the heap: every Go struct whose address
+  reaches wgpu-native only as a `uintptr` stored in another struct (render pass
+  attachments, dynamic offsets of `SetBindGroup`, color target `Blend`, surface
+  sources, ...) goes through `pin`, which forces heap allocation.
+  `//go:uintptrescapes` only covers pointers converted in the call's argument
+  list, so these could still move with the goroutine stack before the call.
 
 ### Changed
 

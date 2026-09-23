@@ -23,7 +23,7 @@ type procImpl interface {
 //
 // Proc is a concrete type (not an interface) so that Call can carry
 // //go:uintptrescapes. Callers pass Go structs as
-// uintptr(unsafe.Pointer(&local)); without the directive those locals stay
+// uintptr(unsafe.Pointer(pin(&local))); without the directive those locals stay
 // on the goroutine stack and can move (stack growth, GC shrink) between the
 // conversion and the native call, so wgpu-native reads stale input or
 // writes its output to the old stack. Seen as wgpuSurfaceGetCurrentTexture

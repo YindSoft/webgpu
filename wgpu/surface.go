@@ -134,7 +134,7 @@ func (s *Surface) Configure(device *Device, config *SurfaceConfiguration) error 
 
 	procSurfaceConfigure.Call( //nolint:errcheck
 		s.handle,
-		uintptr(unsafe.Pointer(&nativeConfig)),
+		uintptr(unsafe.Pointer(pin(&nativeConfig))),
 	)
 	return nil
 }
@@ -169,7 +169,7 @@ func (s *Surface) GetCurrentTexture() (*SurfaceTexture, bool, error) {
 
 	procSurfaceGetCurrentTexture.Call( //nolint:errcheck
 		s.handle,
-		uintptr(unsafe.Pointer(&surfTex)),
+		uintptr(unsafe.Pointer(pin(&surfTex))),
 	)
 
 	result := &SurfaceTexture{Status: surfTex.status}
@@ -260,7 +260,7 @@ func (s *Surface) GetCapabilities(adapter *Adapter) (*SurfaceCapabilities, error
 	procSurfaceGetCapabilities.Call( //nolint:errcheck
 		s.handle,
 		adapter.handle,
-		uintptr(unsafe.Pointer(&wire)),
+		uintptr(unsafe.Pointer(pin(&wire))),
 	)
 
 	// Convert wire struct to Go struct
@@ -296,7 +296,7 @@ func (s *Surface) GetCapabilities(adapter *Adapter) (*SurfaceCapabilities, error
 	}
 
 	// Free C memory allocated by wgpu-native
-	procSurfaceCapabilitiesFreeMembers.Call(uintptr(unsafe.Pointer(&wire))) //nolint:errcheck
+	procSurfaceCapabilitiesFreeMembers.Call(uintptr(unsafe.Pointer(pin(&wire)))) //nolint:errcheck
 
 	return caps, nil
 }

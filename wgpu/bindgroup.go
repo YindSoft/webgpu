@@ -243,12 +243,12 @@ func (d *Device) CreateBindGroupLayout(desc *BindGroupLayoutDescriptor) (*BindGr
 		for i := range desc.Entries {
 			wireEntries[i] = desc.Entries[i].toWire()
 		}
-		wireDesc.Entries = uintptr(unsafe.Pointer(&wireEntries[0]))
+		wireDesc.Entries = uintptr(unsafe.Pointer(pin(&wireEntries[0])))
 	}
 
 	handle, _, _ := procDeviceCreateBindGroupLayout.Call(
 		d.handle,
-		uintptr(unsafe.Pointer(&wireDesc)),
+		uintptr(unsafe.Pointer(pin(&wireDesc))),
 	)
 	if handle == 0 {
 		return nil, &WGPUError{Op: "CreateBindGroupLayout", Message: "wgpu returned null handle"}
@@ -301,7 +301,7 @@ func (d *Device) CreateBindGroup(desc *BindGroupDescriptor) (*BindGroup, error) 
 		for i := range desc.Entries {
 			wireEntries[i] = desc.Entries[i].toWire()
 		}
-		wireEntriesPtr = uintptr(unsafe.Pointer(&wireEntries[0]))
+		wireEntriesPtr = uintptr(unsafe.Pointer(pin(&wireEntries[0])))
 	}
 
 	wire := bindGroupDescriptorWire{
@@ -313,7 +313,7 @@ func (d *Device) CreateBindGroup(desc *BindGroupDescriptor) (*BindGroup, error) 
 
 	handle, _, _ := procDeviceCreateBindGroup.Call(
 		d.handle,
-		uintptr(unsafe.Pointer(&wire)),
+		uintptr(unsafe.Pointer(pin(&wire))),
 	)
 	if handle == 0 {
 		return nil, &WGPUError{Op: "CreateBindGroup", Message: "wgpu returned null handle"}
